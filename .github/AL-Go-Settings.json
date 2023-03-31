@@ -1,0 +1,31 @@
+{
+  "type": "PTE",
+  "templateUrl": "https://github.com/businesscentraldemos/AL-Go-PTE@PowerPlatform",
+  "powerPlatformSolutionFolder": "BcSampleAppsSolution",
+  "environments": [
+    "andersg (Production)",
+    "Staging",
+    "UX (Production)",
+    "BLAZEJ (Production)"
+  ],
+  "DeployToAndersg": {
+    "environmentName": "powerAppsTest",
+    "companyId": "a0d54bf1-ffb7-ed11-a389-000d3a269d47",
+    "ppEnvironmentUrl": "https://orgc791aad2.crm.dynamics.com/"
+  },
+  "DeployToStaging": {
+    "environmentName": "Sandbox",
+    "companyId": "a0d54bf1-ffb7-ed11-a389-000d3a269d47",
+    "ppEnvironmentUrl": "https://org835014c5.crm.dynamics.com/"
+  },
+  "DeployToUX": {
+    "environmentName": "Production",
+    "companyId": "a2db7307-078b-ed11-aad8-000d3a21edc2",
+    "ppEnvironmentUrl": "https://orgbcdd3464.crm.dynamics.com/"
+  },
+  "DeployToBLAZEJ": {
+    "environmentName": "SandboxCopilot22",
+    "companyId": "726a0ad6-0dc2-ed11-a385-000d3a269ff8",
+    "ppEnvironmentUrl": "https://orgb8099c47.crm.dynamics.com/"
+  }
+}

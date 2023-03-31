@@ -1,0 +1,139 @@
+name: ' Publish To Environment'
+
+on:
+  workflow_dispatch:
+    inputs:
+      appVersion:
+        description: App version to deploy to environment(s) (current, prerelease, draft, latest or version number)
+        required: false
+        default: 'current'
+      environmentName:
+        description: Environment mask to receive the new version (* for all, PROD* for all environments starting with PROD)
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+
+defaults:
+  run:
+    shell: powershell
+
+env:
+  ALGoOrgSettings: ${{ vars.ALGoOrgSettings }}
+  ALGoRepoSettings: ${{ vars.ALGoRepoSettings }}
+
+jobs:
+  Initialization:
+    runs-on: [ windows-latest ]
+    outputs:
+      telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
+      settings: ${{ steps.ReadSettings.outputs.SettingsJson }}
+      environments: ${{ steps.ReadSettings.outputs.EnvironmentsJson }}
+      environmentCount: ${{ steps.ReadSettings.outputs.EnvironmentCount }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Initialize the workflow
+        id: init
+        uses: BusinessCentralDemos/AL-Go-Actions/WorkflowInitialize@PowerPlatform
+        with:
+          shell: powershell
+          eventId: "DO0097"
+
+      - name: Read settings
+        id: ReadSettings
+        uses: BusinessCentralDemos/AL-Go-Actions/ReadSettings@PowerPlatform
+        with:
+          shell: powershell
+          parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
+          getEnvironments: ${{ github.event.inputs.environmentName }}
+          includeProduction: 'Y'
+
+  Deploy:
+    needs: [ Initialization ]
+    if: ${{ needs.Initialization.outputs.environmentCount > 0 }}
+    strategy: ${{ fromJson(needs.Initialization.outputs.environments) }}
+    runs-on: ${{ fromJson(matrix.os) }}
+    name: Deploy to ${{ matrix.environment }}
+    environment:
+      name: ${{ matrix.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: EnvName
+        id: envName
+        run: |
+          $ErrorActionPreference = "STOP"
+          Set-StrictMode -version 2.0
+          $envName = '${{ matrix.environment }}'.split(' ')[0]
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "envName=$envName"
+
+      - name: Read settings
+        uses: BusinessCentralDemos/AL-Go-Actions/ReadSettings@PowerPlatform
+        with:
+          shell: powershell
+
+      - name: Read secrets
+        uses: BusinessCentralDemos/AL-Go-Actions/ReadSecrets@PowerPlatform
+        env:
+          secrets: ${{ toJson(secrets) }}
+        with:
+          shell: powershell
+          settingsJson: ${{ env.Settings }}
+          secrets: '${{ steps.envName.outputs.envName }}-AuthContext,${{ steps.envName.outputs.envName }}_AuthContext,AuthContext,${{ steps.envName.outputs.envName }}-EnvironmentName,${{ steps.envName.outputs.envName }}_EnvironmentName,EnvironmentName,projects'
+
+      - name: Get Auth context
+        uses: BusinessCentralDemos/AL-Go-Actions/ReadAuthContext@PowerPlatform
+        with: 
+          shell: powershell
+          envName: ${{ steps.envName.outputs.envName }}
+          environment: ${{ steps.envName.outputs.envName }}
+
+      - name: Deploy AL
+        uses: BusinessCentralDemos/AL-Go-Actions/Deploy@PowerPlatform
+        env:
+          AuthContext: ${{ env.authContext }}
+        with:
+          shell: powershell
+          parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
+          type: 'Publish'
+          projects: ${{ env.projects }}
+          environmentName: ${{ env.environmentName }}
+          artifacts: ${{ github.event.inputs.appVersion }}
+
+      - name: Get Artifacts
+        uses: BusinessCentralDemos/AL-Go-Actions/GetArtifacts@PowerPlatform
+        with:
+          shell: powershell
+          parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
+          artifactVersion: ${{ github.event.inputs.appVersion }}
+          
+      - name: Deploy PowerPlatform
+        if: ${{ env.deployPP == 'true' }}
+        uses: BusinessCentralDemos/AL-Go-Actions/DeployPowerPlatform@PowerPlatform
+        with:
+          shell: powershell
+          parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
+          artifactPath: '.artifacts'
+          deploySettings: ${{ env.deployTo }} 
+          authSettings: ${{ env.authContext }}
+
+
+  PostProcess:
+    if: always()
+    runs-on: [ windows-latest ]
+    needs: [ Initialization, Deploy ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Finalize the workflow
+        id: PostProcess
+        uses: BusinessCentralDemos/AL-Go-Actions/WorkflowPostProcess@PowerPlatform
+        with:
+          shell: powershell
+          eventId: "DO0097"
+          telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
