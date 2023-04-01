@@ -1,0 +1,132 @@
+"'Measurement Screen' As screen":
+
+    Container6 As groupContainer.verticalAutoLayoutContainer:
+        Height: =Parent.Height - 40
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =10
+        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+        LayoutMode: =LayoutMode.Auto
+        Width: =Parent.Width
+        ZIndex: =1
+
+        Container7_1 As groupContainer.manualLayoutContainer:
+            FillPortions: =0
+            Height: =100 
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            ZIndex: =1
+
+            Icon3 As icon.Cancel:
+                Color: =varTheme.brandColor
+                Height: =100
+                Icon: =Icon.Cancel
+                PaddingBottom: =20
+                PaddingLeft: =20
+                PaddingRight: =20
+                PaddingTop: =20
+                Width: =100
+                X: =Parent.Width - Self.Width
+                ZIndex: =1
+
+            Label2 As label:
+                Align: =Align.Center
+                Font: =varTheme.font
+                Height: =Parent.Height
+                Size: =34
+                Text: ="AR Measurement"
+                Width: =Parent.Width
+                ZIndex: =2
+
+        Image1 As image:
+            AlignInContainer: =AlignInContainer.Stretch
+            Height: =Parent.Height * 0.3
+            Image: =varImage.ImageURI
+            Width: =
+            ZIndex: =2
+
+        conMeasurementValues As groupContainer.verticalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.Center
+            Height: =225
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutMinHeight: =112
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            PaddingLeft: =20
+            PaddingRight: =20
+            Width: =400
+            ZIndex: =3
+
+            Label4 As label:
+                Height: =70
+                LayoutMinHeight: =70
+                LayoutMinWidth: =560
+                Size: =21
+                Text: ="Height (" & varMeasurement.Unit &")"
+                Width: =300
+                ZIndex: =1
+
+            TextInput1 As text:
+                Default: =varMeasurement.Height
+                Format: =TextFormat.Number
+                Height: =70
+                LayoutMinHeight: =70
+                LayoutMinWidth: =300
+                Size: =21
+                Width: =300
+                ZIndex: =2
+
+            Label4_1 As label:
+                Height: =70
+                LayoutMinHeight: =70
+                LayoutMinWidth: =560
+                Size: =21
+                Text: ="Width (" & varMeasurement.Unit &")"
+                Width: =300
+                ZIndex: =3
+
+            TextInput1_1 As text:
+                Default: =varMeasurement.BoundingWidth
+                Format: =TextFormat.Number
+                Height: =70
+                LayoutMinHeight: =70
+                LayoutMinWidth: =300
+                Size: =21
+                Width: =300
+                ZIndex: =4
+
+            Label4_2 As label:
+                Height: =70
+                LayoutMinHeight: =70
+                LayoutMinWidth: =560
+                Size: =21
+                Text: ="Depth (" & varMeasurement.Unit &")"
+                Width: =300
+                ZIndex: =5
+
+            TextInput1_2 As text:
+                Default: =varMeasurement.BoundingDepth
+                Format: =TextFormat.Number
+                Height: =70
+                LayoutMinHeight: =70
+                LayoutMinWidth: =300
+                Size: =21
+                Width: =300
+                ZIndex: =6
+
+        Button2 As button:
+            BorderThickness: =0
+            Fill: =varTheme.brandColor
+            Height: =80
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate('Coffee Machines Screen', ScreenTransition.Cover);
+            RadiusBottomLeft: =40
+            RadiusBottomRight: =40
+            RadiusTopLeft: =40
+            RadiusTopRight: =40
+            Size: =20
+            Text: ="Use as filter"
+            Width: =250
+            ZIndex: =4
+

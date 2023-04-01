@@ -1,0 +1,53 @@
+"'Coffee Machine screen' As screen":
+
+    Label6 As label:
+        Align: =Align.Center
+        Height: =70
+        Size: =22
+        Text: =varSelectedCoffeeMachine.Number & " " & varSelectedCoffeeMachine.DisplayName
+        Width: =640
+        Y: =30
+        ZIndex: =1
+
+    Icon1 As icon.ChevronLeft:
+        Height: =80
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Back(ScreenTransition.UnCoverRight);
+        PaddingBottom: =20
+        PaddingLeft: =20
+        PaddingRight: =20
+        PaddingTop: =20
+        Width: =80
+        Y: =20
+        ZIndex: =2
+
+    Image6 As image:
+        Height: =444
+        Image: =varSelectedCoffeeMachine.Picture
+        ImagePosition: =ImagePosition.Fill
+        Width: =463
+        X: =88
+        Y: =198
+        ZIndex: =3
+
+    Button3 As button:
+        Fill: =varTheme.brandColor
+        Height: =70
+        Size: =24
+        Text: ="See in VR"
+        Width: =393
+        X: =123
+        Y: =854
+        ZIndex: =4
+
+    Button3_1 As button:
+        Fill: =varTheme.brandColor
+        Height: =70
+        OnSelect: =Navigate('Extras Screen', ScreenTransition.Cover)
+        Size: =24
+        Text: ="Select"
+        Width: =393
+        X: =123
+        Y: =977
+        ZIndex: =5
+
