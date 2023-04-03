@@ -349,5 +349,55 @@
     "Name": "timer",
     "OverridableProperties": {},
     "Version": "2.1.0"
+  },
+  "View in MR (preview)": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/powercontrol/ViewInMR",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": true,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": false,
+    "LastModifiedTimestamp": "0",
+    "Name": "ViewInMR",
+    "OverridableProperties": {
+      "Photos": {
+        "Type": {
+          "EnumString": "",
+          "Kind": "Table",
+          "Name": "Root",
+          "Type": [
+            {
+              "EnumString": "",
+              "Kind": "Number",
+              "Name": "FileSize",
+              "Type": []
+            },
+            {
+              "EnumString": "",
+              "Kind": "Image",
+              "Name": "ImageURI",
+              "Type": []
+            },
+            {
+              "EnumString": "",
+              "Kind": "String",
+              "Name": "MimeType",
+              "Type": []
+            }
+          ]
+        },
+        "Version": "1.330"
+      }
+    },
+    "PCFDynamicSchemaForIRRetrieval": {
+      "Photos": {
+        "DynamicSchema": "{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ImageURI\":{\"type\":\"string\",\"format\":\"uri\",\"x-ms-media-kind\":\"image\"},\"MimeType\":{\"type\":\"string\"},\"FileSize\":{\"type\":\"number\"}}}}",
+        "PCFSkipValidation": false
+      }
+    },
+    "TemplateDisplayName": "View in MR (preview)",
+    "Version": "1.0.29"
   }
 }
