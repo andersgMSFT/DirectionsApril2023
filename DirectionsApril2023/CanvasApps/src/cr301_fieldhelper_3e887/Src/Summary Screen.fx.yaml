@@ -310,11 +310,6 @@
                 ZIndex: =5
 
             conQuantityControlOrderSummary As groupContainer.manualLayoutContainer:
-                DisplayMode: |-
-                    =If(Not(IsBlank(varActiveorderForSelectedTable)), 
-                        DisplayMode.View, 
-                        DisplayMode.Edit
-                    )
                 Fill: =varTheme.brandColor
                 Height: =Parent.Height - 5
                 Visible: =ThisItem.id = ctxShowQuantityControlForIs
