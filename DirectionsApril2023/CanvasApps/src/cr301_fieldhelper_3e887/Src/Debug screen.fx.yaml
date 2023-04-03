@@ -1,0 +1,14 @@
+"'Debug screen' As screen":
+
+    Button6 As button:
+        Height: =70
+        OnSelect: |-
+            =Set(varMeasurement, {Height: 20, BoundingWidth: 100, BoundingDepth: 20 });
+            Navigate('Coffee Machines Screen');
+        Size: =24
+        Text: ="Button"
+        Width: =280
+        X: =165
+        Y: =290
+        ZIndex: =1
+

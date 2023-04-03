@@ -24,12 +24,11 @@
                 BorderColor: =RGBA(32, 54, 71, 1)
                 Color: =varTheme.brandColor
                 Font: =varTheme.font
-                Height: =65
+                Height: =100
                 OnSelect: =
                 Size: =34
                 Text: ="Item Details"
                 Width: =Parent.Width
-                Y: =25
                 ZIndex: =2
 
             icnCloseItemDetails As icon.Lock:
@@ -399,7 +398,7 @@
                 txtItemLongDescription As text:
                     AlignInContainer: =AlignInContainer.Stretch
                     BorderColor: =RGBA(32, 54, 71, 1)
-                    Default: =ctxSelectedItem.'Long Item Description'
+                    Default: =ctxSelectedItem.'Long description'
                     DisplayMode: =DisplayMode.View
                     Font: =varTheme.font
                     Height: =170

@@ -23,7 +23,7 @@
             EnableShadows: =true
             FillColor: =varTheme.brandColor
             FontSize: =36
-            Height: =Parent.Height * 0.30
+            Height: =Parent.Height * 0.20
             HoverBorderColor: =RGBA(88, 115, 171, 1)
             HoverContentColor: =RGBA(255, 255, 255, 1)
             HoverFillColor: =ColorFade(varTheme.brandColor, 20%)
@@ -43,16 +43,17 @@
             PressedContentColor: =RGBA(255, 255, 255, 1)
             PressedFillColor: =varTheme.brandColor
             TextColor: =RGBA(255, 255, 255, 1)
-            Width: =Parent.Width * 0.9
+            Units: ='Microsoft.MeasureInMR.Units'.MSR_Centimeters
+            Width: =Parent.Width * 0.8  
             X: =0
             Y: =0
             ZIndex: =1
 
         btnPickFromList As button:
             Fill: =varTheme.brandColor
-            Height: =Parent.Height * 0.3
+            Height: =mrStartMeasure.Height
             HoverFill: =ColorFade(varTheme.brandColor, 20%)
-            OnSelect: =Navigate('Extras Screen', ScreenTransition.Cover);
+            OnSelect: =Navigate('Coffee Machines Screen', ScreenTransition.Cover);
             PaddingBottom: =0
             PaddingLeft: =0
             PaddingRight: =0
@@ -65,6 +66,19 @@
             RadiusTopRight: =50
             Size: =36
             Text: ="Pick from list"
-            Width: =Parent.Width * 0.90
+            Width: =mrStartMeasure.Width
             ZIndex: =2
+
+    Icon4_1 As icon.ChevronLeft:
+        Color: =varTheme.brandColor
+        Height: =100 
+        Icon: =Icon.Cancel
+        OnSelect: =Back(ScreenTransition.UnCoverRight)
+        PaddingBottom: =20
+        PaddingLeft: =20
+        PaddingRight: =20
+        PaddingTop: =20
+        Width: =100
+        X: =Parent.Width - Self.Width
+        ZIndex: =2
 

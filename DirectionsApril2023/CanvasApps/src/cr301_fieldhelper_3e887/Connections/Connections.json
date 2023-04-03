@@ -17,8 +17,8 @@
           "customers (v2.0)": {
             "tableName": "customers,v2.0"
           },
-          "itemsWithImage (microsoft/powerApps/beta)": {
-            "tableName": "itemsWithImage,microsoft%252FpowerApps%252Fbeta"
+          "directionsItems (microsoft/powerApps/beta)": {
+            "tableName": "directionsItems,microsoft%252FpowerApps%252Fbeta"
           },
           "salesOrderLines (v2.0)": {
             "tableName": "salesOrderLines,v2.0"
@@ -30,10 +30,10 @@
       }
     },
     "dataSources": [
-      "itemsWithImage (microsoft/powerApps/beta)",
       "customers (v2.0)",
       "salesOrders (v2.0)",
-      "salesOrderLines (v2.0)"
+      "salesOrderLines (v2.0)",
+      "directionsItems (microsoft/powerApps/beta)"
     ],
     "dependencies": {},
     "dependents": [],
