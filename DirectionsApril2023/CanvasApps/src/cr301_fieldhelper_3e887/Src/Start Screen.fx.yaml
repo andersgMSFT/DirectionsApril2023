@@ -1,5 +1,8 @@
 "'Start Screen' As screen":
     Fill: =varTheme.brandColor
+    OnVisible: |-
+        =Set(varSelectedCoffeeMachine, Blank());
+        Set(varMeasurement, Blank());
 
     conStartContent As groupContainer.verticalAutoLayoutContainer:
         Height: =Parent.Height * 0.9

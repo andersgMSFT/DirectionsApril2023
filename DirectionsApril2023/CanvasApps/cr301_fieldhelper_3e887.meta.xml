@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>cr301_fieldhelper_3e887</Name>
-  <AppVersion>2023-04-01T20:28:52Z</AppVersion>
+  <AppVersion>2023-04-03T13:35:01Z</AppVersion>
   <Status>Ready</Status>
   <CreatedByClientVersion>3.23032.12.0</CreatedByClientVersion>
   <MinClientVersion>3.23032.12.0</MinClientVersion>
@@ -14,7 +14,7 @@
   <CommitMessage xsi:nil="true"></CommitMessage>
   <Publisher xsi:nil="true"></Publisher>
   <AuthorizationReferences>[]</AuthorizationReferences>
-  <ConnectionReferences>{"0ff5df45-9575-4f2b-8cac-8ae027644295":{"id":"/providers/microsoft.powerapps/apis/shared_dynamicssmbsaas","displayName":"Dynamics 365 Business Central","iconUri":"https://connectoricons-prod.azureedge.net/releases/v1.0.1624/1.0.1624.3220/dynamicssmbsaas/icon.png","dataSources":["itemsWithImage (microsoft/powerApps/beta)","customers (v2.0)","salesOrders (v2.0)","salesOrderLines (v2.0)"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{"POWERAPPSTEST,a0d54bf1-ffb7-ed11-a389-000d3a269d47":{"dataSources":{"itemsWithImage (microsoft/powerApps/beta)":{"tableName":"itemsWithImage,microsoft%252FpowerApps%252Fbeta"},"customers (v2.0)":{"tableName":"customers,v2.0"},"salesOrders (v2.0)":{"tableName":"salesOrders,v2.0"},"salesOrderLines (v2.0)":{"tableName":"salesOrderLines,v2.0"}}}},"apiTier":"Premium","actions":["providers/PowerPlatform.Governance/Operations/Read","providers/PowerPlatform.Governance/Operations/Write"]}}</ConnectionReferences>
+  <ConnectionReferences>{"0ff5df45-9575-4f2b-8cac-8ae027644295":{"id":"/providers/microsoft.powerapps/apis/shared_dynamicssmbsaas","displayName":"Dynamics 365 Business Central","iconUri":"https://connectoricons-prod.azureedge.net/releases/v1.0.1624/1.0.1624.3220/dynamicssmbsaas/icon.png","dataSources":["customers (v2.0)","salesOrders (v2.0)","salesOrderLines (v2.0)","directionsItems (microsoft/powerApps/beta)"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{"POWERAPPSTEST,a0d54bf1-ffb7-ed11-a389-000d3a269d47":{"dataSources":{"customers (v2.0)":{"tableName":"customers,v2.0"},"salesOrders (v2.0)":{"tableName":"salesOrders,v2.0"},"salesOrderLines (v2.0)":{"tableName":"salesOrderLines,v2.0"},"directionsItems (microsoft/powerApps/beta)":{"tableName":"directionsItems,microsoft%252FpowerApps%252Fbeta"}}}},"apiTier":"Premium","actions":["providers/PowerPlatform.Governance/Operations/Read"]}}</ConnectionReferences>
   <DatabaseReferences>{}</DatabaseReferences>
   <AppComponents>[]</AppComponents>
   <AppComponentDependencies>[]</AppComponentDependencies>
