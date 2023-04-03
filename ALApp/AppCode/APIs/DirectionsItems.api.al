@@ -1,9 +1,9 @@
-page 52001 ItemWithImage
+page 52001 DirectionsItems
 {
     PageType = API;
     Caption = 'Item with image';
-    EntityName = 'itemWithImage';
-    EntitySetName = 'itemsWithImage';
+    EntityName = 'directionsItem';
+    EntitySetName = 'directionsItems';
 
     APIPublisher = 'microsoft';
     APIGroup = 'powerApps';
@@ -43,21 +43,22 @@ page 52001 ItemWithImage
                 {
                     Caption = 'Inventory';
                 }
+                field(itemCategoryName; ItemCatagoryName)
+                {
+                    Editable = false;
+                    Caption = 'Item Category Name';
+                }
+                field("itemCategoryCode"; Rec."Item Category Code")
+                {
+                    Caption = 'Item Category Code';
+                }
                 field(itemImageText; Rec.Picture)
                 {
                     Caption = 'Picture reference';
                 }
-                field(width; Rec.Width)
+                field(longDescription; Rec.LongDescription)
                 {
-                    Caption = 'Width';
-                }
-                field(height; Rec.Height)
-                {
-                    Caption = 'Height';
-                }
-                field(depth; Rec.Depth)
-                {
-                    Caption = 'Depth';
+                    Caption = 'Long description';
                 }
                 field(isAvailableForFieldWorkers; rec.IsAvialableForFieldWorker)
                 {

@@ -1,4 +1,4 @@
-codeunit 51001 PowerAppsDemoDataGenerator
+codeunit 52001 PowerAppsDemoDataGenerator
 {
     procedure DeleteDemoDataForPowerApps()
     var
@@ -6,12 +6,9 @@ codeunit 51001 PowerAppsDemoDataGenerator
         cutsomerRecord: Record Customer;
     begin
         // Delete all added items
-        itemRecord.SetRange(SoldInRestaurant, true);
+        itemRecord.SetRange(IsAvialableForFieldWorker, true);
         itemRecord.DeleteAll(true);
 
-        // Delete all added tables (customers)
-        cutsomerRecord.SetRange(IsTable, true);
-        cutsomerRecord.DeleteAll(true);
         // Note: We are leaving the item catagories since they don't disturb much
     end;
 
@@ -27,17 +24,25 @@ codeunit 51001 PowerAppsDemoDataGenerator
     begin
 
         // Add item catagories
-        AddItemCatagories('Warm drinks', 'warmDrinks');
+        AddItemCatagories('Finished goods', 'finishedGoods');
+        addItemCatagories('Consumables', 'consumables');
+        addItemCatagories('Maintenance', 'maintenance');
 
         // Add items
-        AddItem('W0001', 'Caffè', 'warmDrinks', '', 'Hawaii dark roast has scents of cedar and roasted hazelnuts with flavors of chocolate, toasted nuts, and a tangy strawberry finish.', 2.00, itemImageCodeUnit.W0001_Caffe());
+        AddItem('CO001', 'Contoso PRO 2018 San Diego', 'Contoso PRO 2018 San Diego', 'finishedGoods', 699, itemImageCodeUnit.C0001_SanDiego());
+        AddItem('CO002', 'Contoso PRO 2019 Las Vegas', 'Contoso PRO 2019 Las Vegas', 'finishedGoods', 850, itemImageCodeUnit.C0002_LasVegas());
+        addItem('CO003', 'Contoso PRO 2022 Orlando', 'Contoso PRO 2022 Orlando', 'finishedGoods', 499, itemImageCodeUnit.C0003_2022Orlando());
+        addItem('CO004', 'Contoso PRO 2023 Orlando', 'Contoso PRO 2023 Orlando', 'finishedGoods', 699, itemImageCodeUnit.C0004_2023Orlando());
 
         // Add unit of measure      
-        AddItemUnitOfMeasure('W0001');
+        AddItemUnitOfMeasure('CO001');
+        AddItemUnitOfMeasure('CO002');
+        AddItemUnitOfMeasure('CO003');
+        AddItemUnitOfMeasure('CO004');
 
     end;
 
-    procedure AddItem(ItemNumber: Text; ItemName: Text; itemCategory: Text; unitPrice: Decimal; height: Decimal; width: Decimal; Depth: Decimal; itemPicture: Text)
+    procedure AddItem(ItemNumber: Text; ItemName: Text; description: Text; itemCategory: Text; unitPrice: Decimal; itemPicture: Text)
     var
         itemRecord: Record Item;
         inventoryGroup: Record "Inventory Posting Group";
@@ -54,11 +59,13 @@ codeunit 51001 PowerAppsDemoDataGenerator
         itemRecord.Init();
         itemRecord.Validate("No.", ItemNumber);
         itemRecord.Validate(Description, ItemName);
+        itemRecord.Validate(LongDescription, description);
         itemRecord.Validate("Unit Price", unitPrice);
         itemRecord.Validate("Item Category Code", itemCategory);
         itemRecord.Validate("Inventory Posting Group", inventoryGroup.Code);
         itemRecord.Validate("Gen. Prod. Posting Group", genProdPostingGroup.Code);
         itemRecord.Validate("Tax Group Code", taxGroupCode.Code);
+        itemRecord.Validate(IsAvialableForFieldWorker, true);
         addImageToItem(itemPicture, itemRecord);
 
         // Save the item

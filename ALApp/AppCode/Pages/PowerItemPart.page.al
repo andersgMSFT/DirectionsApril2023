@@ -2,7 +2,7 @@ page 52005 PowerItemListPart
 {
     PageType = ListPart;
     SourceTable = Item;
-    SourceTableView = where(SoldInRestaurant = const(true));
+    SourceTableView = where(IsAvialableForFieldWorker = const(true));
 
     layout
     {
@@ -23,18 +23,6 @@ page 52005 PowerItemListPart
                     ApplicationArea = All;
                 }
                 field("Item Category Code"; Rec."Item Category Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("longDescription"; Rec.LongItemDescription)
-                {
-                    ApplicationArea = All;
-                }
-                field(AllergenInformation; Rec.AllergenInformation)
-                {
-                    ApplicationArea = All;
-                }
-                field(showInPowerApp; Rec.SoldInRestaurant)
                 {
                     ApplicationArea = All;
                 }
