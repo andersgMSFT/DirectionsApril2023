@@ -1,4 +1,6 @@
 "'Measurement Screen' As screen":
+    OnVisible: |-
+        =UpdateContext({ctxSelectedMeasurement:Blank()});
 
     Container6 As groupContainer.verticalAutoLayoutContainer:
         Height: =Parent.Height - 40
@@ -17,103 +19,87 @@
             LayoutMinWidth: =250
             ZIndex: =1
 
-            Icon3 As icon.Cancel:
-                Color: =varTheme.brandColor
-                Height: =100
-                Icon: =Icon.Cancel
-                PaddingBottom: =20
-                PaddingLeft: =20
-                PaddingRight: =20
-                PaddingTop: =20
-                Width: =100
-                X: =Parent.Width - Self.Width
-                ZIndex: =1
-
             Label2 As label:
                 Align: =Align.Center
+                Color: =varTheme.brandColor
                 Font: =varTheme.font
                 Height: =Parent.Height
                 Size: =34
                 Text: ="AR Measurement"
                 Width: =Parent.Width
+                ZIndex: =1
+
+            Icon3 As icon.Cancel:
+                Color: =varTheme.brandColor
+                Height: =100
+                Icon: =Icon.ChevronLeft
+                OnSelect: =Back(ScreenTransition.UnCoverRight)
+                PaddingBottom: =30
+                PaddingLeft: =30
+                PaddingRight: =30
+                PaddingTop: =30
+                Width: =100
                 ZIndex: =2
 
         Image1 As image:
-            AlignInContainer: =AlignInContainer.Stretch
-            Height: =Parent.Height * 0.3
+            AlignInContainer: =AlignInContainer.Center
+            BorderColor: =RGBA(237, 237, 237, 1)
+            BorderThickness: =2
+            Height: =Parent.Height * 0.6
             Image: =varImage.ImageURI
-            Width: =
+            ImagePosition: =ImagePosition.Fill
+            RadiusBottomLeft: =10
+            RadiusBottomRight: =10
+            RadiusTopLeft: =10
+            RadiusTopRight: =10
+            Width: =Parent.Width * 0.9
             ZIndex: =2
 
-        conMeasurementValues As groupContainer.verticalAutoLayoutContainer:
-            AlignInContainer: =AlignInContainer.Center
-            Height: =225
-            LayoutAlignItems: =LayoutAlignItems.Center
-            LayoutDirection: =LayoutDirection.Vertical
-            LayoutMinHeight: =112
-            LayoutMinWidth: =250
-            LayoutMode: =LayoutMode.Auto
-            PaddingLeft: =20
-            PaddingRight: =20
-            Width: =400
-            ZIndex: =3
+        "galMeasurements As gallery.'BrowseLayout_Horizontal_TwoTextOneImageVariant_ver4.0'":
+            AlignInContainer: =AlignInContainer.SetByContainer
+            DelayItemLoading: =true
+            FillPortions: =0
+            Height: =70
+            Items: |-
+                =[
+                    {name: "H:", longName: "Height", value: varMeasurement.Height },
+                    {name: "W:",longName: "Width", value: varMeasurement.BoundingWidth},
+                    {name: "D:",longName: "Depth", value: varMeasurement.BoundingDepth}
+                ]
+            LayoutMinHeight: =287
+            LayoutMinWidth: =320
+            LoadingSpinner: =LoadingSpinner.Data
+            OnSelect: =
+            TemplatePadding: =0
+            TemplateSize: =Parent.Width /3
+            ZIndex: =2
 
-            Label4 As label:
-                Height: =70
-                LayoutMinHeight: =70
-                LayoutMinWidth: =560
-                Size: =21
-                Text: ="Height (" & varMeasurement.Unit &")"
-                Width: =300
-                ZIndex: =1
-
-            TextInput1 As text:
-                Default: =varMeasurement.Height
-                Format: =TextFormat.Number
-                Height: =70
-                LayoutMinHeight: =70
-                LayoutMinWidth: =300
-                Size: =21
-                Width: =300
-                ZIndex: =2
-
-            Label4_1 As label:
-                Height: =70
-                LayoutMinHeight: =70
-                LayoutMinWidth: =560
-                Size: =21
-                Text: ="Width (" & varMeasurement.Unit &")"
-                Width: =300
-                ZIndex: =3
-
-            TextInput1_1 As text:
-                Default: =varMeasurement.BoundingWidth
-                Format: =TextFormat.Number
-                Height: =70
-                LayoutMinHeight: =70
-                LayoutMinWidth: =300
-                Size: =21
-                Width: =300
-                ZIndex: =4
-
-            Label4_2 As label:
-                Height: =70
-                LayoutMinHeight: =70
-                LayoutMinWidth: =560
-                Size: =21
-                Text: ="Depth (" & varMeasurement.Unit &")"
-                Width: =300
+            conMeasurementContainer As groupContainer.manualLayoutContainer:
+                Height: =Parent.TemplateHeight
+                Width: =Parent.TemplateWidth - 20
+                X: =10
                 ZIndex: =5
 
-            TextInput1_2 As text:
-                Default: =varMeasurement.BoundingDepth
-                Format: =TextFormat.Number
-                Height: =70
-                LayoutMinHeight: =70
-                LayoutMinWidth: =300
-                Size: =21
-                Width: =300
-                ZIndex: =6
+                btnMeasurement As button:
+                    BorderThickness: =0
+                    DisplayMode: =DisplayMode.View
+                    Fill: =varTheme.brandColor
+                    Height: =Parent.Height -4
+                    HoverFill: =ColorFade(Self.Fill, -20%)
+                    OnSelect: |-
+                        =If(ctxSelectedMeasurement.name = ThisItem.name,
+                            UpdateContext({ctxSelectedMeasurement: Blank()});
+                            ,
+                            UpdateContext({ctxSelectedMeasurement: ThisItem});
+                        );
+                    RadiusBottomLeft: =40
+                    RadiusBottomRight: =40
+                    RadiusTopLeft: =40
+                    RadiusTopRight: =40
+                    Size: =20
+                    Text: =ThisItem.name & " " & ThisItem.value & "cm"
+                    Width: =Parent.Width 
+                    ZIndex: =1
 
         Button2 As button:
             BorderThickness: =0
@@ -128,5 +114,5 @@
             Size: =20
             Text: ="Use as filter"
             Width: =250
-            ZIndex: =4
+            ZIndex: =5
 

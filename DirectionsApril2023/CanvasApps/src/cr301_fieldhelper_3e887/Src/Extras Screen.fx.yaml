@@ -1,4 +1,8 @@
 "'Extras Screen' As screen":
+    Fill: =varTheme.brandColor
+    OnVisible: |-
+        =ClearCollect(colExtraItems, Filter('directionsItems (microsoft/powerApps/beta)', StartsWith(Number, "SP-")));
+        Select(galItemGroups, 1);
 
     conButtom As groupContainer.manualLayoutContainer:
         Height: =110
@@ -8,6 +12,7 @@
 
         lblSelectedItemsSumValue As label:
             BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(255, 255, 255, 1)
             Font: =varTheme.font
             Height: =36
             Size: =24
@@ -19,6 +24,7 @@
 
         lblSelectedItemSum As label:
             BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(255, 255, 255, 1)
             Font: =varTheme.font
             Height: =36
             Size: =22
@@ -32,6 +38,7 @@
         lblSelectedTotalValue As label:
             Align: =Align.Right
             BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(255, 255, 255, 1)
             Font: =varTheme.font
             Height: =39
             Size: =24
@@ -44,6 +51,7 @@
         lblSelectedTotal As label:
             Align: =Align.Right
             BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(255, 255, 255, 1)
             Font: =varTheme.font
             Height: =36
             Size: =22
@@ -63,9 +71,8 @@
 
         "galItems As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
             BorderColor: =RGBA(32, 54, 71, 1)
-            Fill: =RGBA(255, 255, 255, 1)
             Height: =Parent.Height
-            Items: ='itemsWithImage (microsoft/powerApps/beta)'
+            Items: =Filter(colExtraItems, 'Item Category Name' = varSelectedItemGroup)
             Layout: =Layout.Vertical
             OnSelect: =
             ShowScrollbar: =false
@@ -105,6 +112,15 @@
                 Y: =imgItemImage.Y - 10
                 ZIndex: =2
 
+            recItemImageOverlay As rectangle:
+                BorderColor: =RGBA(32, 54, 71, 1)
+                Fill: =Color.White
+                Height: =imgItemImage.Height
+                Width: =imgItemImage.Width
+                X: =imgItemImage.X
+                Y: =imgItemImage.Y
+                ZIndex: =3
+
             imgItemImage As image:
                 BorderColor: =RGBA(32, 54, 71, 1)
                 Height: =80
@@ -117,22 +133,17 @@
                     )
                 ImagePosition: =ImagePosition.Stretch
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =5
+                RadiusBottomRight: =5
+                RadiusTopLeft: =5
+                RadiusTopRight: =5
                 Width: =80
                 X: =30  
                 Y: =30
-                ZIndex: =3
-
-            recItemImageOverlay As rectangle:
-                BorderColor: =RGBA(32, 54, 71, 1)
-                Fill: =ColorFade(varTheme.primaryColor, 0.1)
-                Height: =imgItemImage.Height
-                Visible: =false
-                Width: =imgItemImage.Width
-                X: =imgItemImage.X
-                Y: =imgItemImage.Y
                 ZIndex: =4
 
             lblItemDisplayName As label:
+                Color: =RGBA(255, 255, 255, 1)
                 Font: =varTheme.font
                 OnSelect: =Select(Parent)
                 PaddingBottom: =0
@@ -147,6 +158,7 @@
                 ZIndex: =5
 
             lblItemPrice As label:
+                Color: =RGBA(255, 255, 255, 1)
                 Font: =varTheme.font
                 Height: =35
                 OnSelect: =Select(Parent)
@@ -184,7 +196,7 @@
             icnAddItem As icon.ChevronRight:
                 AccessibleLabel: =Self.Tooltip
                 BorderColor: =RGBA(32, 54, 71, 1)
-                Color: =varTheme.primaryColor
+                Color: =Color.White
                 DisplayMode: |-
                     =If(LookUp(colSelectedItems, id = ThisItem.id).quantity >= 99,
                         DisplayMode.Disabled,
@@ -239,6 +251,7 @@
                 ZIndex: =8
 
             btnQuantity As button:
+                BorderColor: =Color.White
                 Fill: =varTheme.primaryColor
                 Font: =varTheme.font
                 Height: =60
@@ -279,7 +292,7 @@
                     BorderThickness: =1
                     DisabledFill: =varTheme.primaryColor
                     DisplayMode: =DisplayMode.View
-                    Fill: =varTheme.primaryColor
+                    Fill: =ColorFade(varTheme.primaryColor, -20%)
                     Height: =70
                     HoverFill: =varTheme.primaryColor
                     OnSelect: =
@@ -345,12 +358,11 @@
 
                 btnQCQuantity As button:
                     BorderColor: =Color.White
-                    BorderThickness: =1
                     DisabledBorderColor: =Color.White
                     DisabledColor: =Color.White
-                    DisabledFill: =varTheme.primaryColor
+                    DisabledFill: =Self.Fill
                     DisplayMode: =DisplayMode.Disabled
-                    Fill: =varTheme.primaryColor
+                    Fill: =ColorFade(varTheme.primaryColor, -20%)
                     Font: =varTheme.font
                     Height: =60
                     HoverBorderColor: =Color.White
@@ -441,12 +453,12 @@
         galItemGroups As gallery.galleryHorizontal:
             BorderColor: =RGBA(32, 54, 71, 1)
             Height: =70
-            Items: =Distinct('itemsWithImage (microsoft/powerApps/beta)', itemCategoryName)
+            Items: =Distinct(Filter(colExtraItems, 'Item Category Name' = "Parts"), 'Item Category Name')
             OnSelect: |
                 =UpdateContext({ctxItemShowingQuantityControl: Blank()});
                 Set(varSelectedItemGroup, ThisItem.Value);
             ShowScrollbar: =false
-            TemplateSize: =(Parent.Width / 4) - 10
+            TemplateSize: =(Parent.Width / 3) 
             Transition: =Transition.Pop
             Width: =Parent.Width
             Y: =Parent.Height - Self.Height
@@ -454,74 +466,73 @@
 
             recItemGroupUnderline As rectangle:
                 BorderColor: =RGBA(32, 54, 71, 1)
-                Fill: =varTheme.primaryColor
+                Fill: =RGBA(255, 255, 255, 1)
                 Height: =5
                 OnSelect: =Select(Parent)
                 Visible: =ThisItem.IsSelected
                 Width: =btnItemGroup.Width - 20
-                X: =10
+                X: =Parent.TemplateWidth/2 - Self.Width/2
                 Y: =50
                 ZIndex: =1
 
             btnItemGroup As button:
                 BorderColor: =Color.Transparent
                 BorderThickness: =0
-                Color: =RGBA(32, 54, 71, 1)
                 Fill: =RGBA(0, 0, 0, 0)
                 Font: =varTheme.font
                 FontWeight: =If(ThisItem.IsSelected, FontWeight.Bold, FontWeight.Semibold)
                 Height: =50
                 HoverBorderColor: =Color.Transparent
-                HoverColor: =RGBA(0, 0, 0, 1)
                 HoverFill: =Color.Transparent
                 OnSelect: =Select(Parent)
                 PaddingLeft: =0
                 PaddingRight: =0
                 PressedBorderColor: =Color.Transparent
-                PressedColor: =Color.Black
+                PressedColor: =RGBA(255, 255, 255, 1)
                 PressedFill: =Color.Transparent
                 Size: =16
                 Text: =ThisItem.Value
                 Width: =150
+                X: =Parent.TemplateWidth/2 - Self.Width/2
                 ZIndex: =2
 
         lblSelectItemsHeader As label:
             Align: =Align.Center
             BorderColor: =RGBA(32, 54, 71, 1)
-            Color: =varTheme.primaryColor
+            Color: =Color.White
             Font: =varTheme.font
-            Height: =65
+            Height: =icnDeleteSelection.Height
             OnSelect: =
-            Size: =28
-            Text: =varSelectedCoffeeMachine.displayName
+            Size: =20
+            Text: =varSelectedCoffeeMachine.DisplayName
             Width: =Parent.Width
-            Y: =25
             ZIndex: =2
 
         icnDeleteSelection As icon.Lock:
             BorderColor: =RGBA(32, 54, 71, 1)
-            Color: =varTheme.primaryColor
-            Height: =100
+            Color: =Color.White
+            Height: =Parent.Height - galItemGroups.Height
             Icon: =Icon.ChevronLeft
             OnSelect: |+
                 =Clear(colSelectedItems);
                 Back(ScreenTransition.CoverRight);
                 
             PaddingBottom: =30
-            PaddingLeft: =5
+            PaddingLeft: =30
             PaddingRight: =30
             PaddingTop: =30
-            Width: =100
+            Width: =Self.Height
             X: =0   
             Y: =3
             ZIndex: =3
 
     btnReviewSelectedItems As button:
+        BorderColor: =Color.White
         DisplayMode: =If(Sum(colSelectedItems, quantity) > 0, DisplayMode.Edit, DisplayMode.Disabled)
         Fill: =varTheme.primaryColor
         Font: =varTheme.font
         Height: =70
-        HoverFill: =ColorFade(RGBA(100, 118, 132, 1), -20%)
+        HoverFill: =ColorFade(Self.Fill, -20%)
         OnSelect: |-
             =UpdateContext({ctxItemShowingQuantityControl: Blank()});
             Navigate('Summary Screen', ScreenTransition.Cover);

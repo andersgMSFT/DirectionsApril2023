@@ -1,4 +1,5 @@
 "'Summary Screen' As screen":
+    Fill: =varTheme.brandColor
     OnVisible: =Select(btnLoadOrderSummary);
 
     btnLoadOrderSummary As button:
@@ -14,6 +15,23 @@
             Clear(colOrderSummary);
             Clear(colCurrentOrderState_CollapsedGroups);
             
+            Collect(colSelectedItems, 
+                {
+                    id: varSelectedCoffeeMachine.'System ID',
+                    name: varSelectedCoffeeMachine.DisplayName,
+                    price: varSelectedCoffeeMachine.'Unit price',
+                    group: "Coffee Machine",
+                    quantity: 1,
+                    // Use placeholder image if the image is not provided
+                    image: If(
+                        varSelectedCoffeeMachine.'Picture reference' = GUID("00000000-0000-0000-0000-000000000000"),
+                        placeholder,
+                        varSelectedCoffeeMachine.Picture
+                    )
+                }
+            );
+            
+            
             // Map selected items into groups for current order
             UpdateContext({ctxAllGroupsForCurrentOrder: ForAll(Distinct(colSelectedItems, group), {Result: ThisRecord.Value})});
             ForAll(ctxAllGroupsForCurrentOrder As itemGroups,
@@ -24,6 +42,7 @@
                 // Set initial group state to collapsed
                 Collect(colCurrentOrderState_CollapsedGroups, {name: itemGroups.Result});
             );
+            
             // Add Total at the end
             Collect(colOrderSummary, {id: GUID(), total: true});
             
@@ -37,7 +56,6 @@
 
     "galOrderSummary As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
         BorderColor: =RGBA(32, 54, 71, 1)
-        Fill: =RGBA(255, 255, 255, 1)
         Height: =881
         Items: |-
             =Filter(colOrderSummary, Or(
@@ -61,6 +79,7 @@
             ZIndex: =1
 
             lblTotalOrder As label:
+                Color: =RGBA(255, 255, 255, 1)
                 Font: =varTheme.font
                 Height: =80  
                 PaddingBottom: =0
@@ -79,6 +98,7 @@
 
             lblItemTotalSum As label:
                 Align: =Align.Right
+                Color: =RGBA(255, 255, 255, 1)
                 Font: =varTheme.font
                 Height: =80
                 PaddingBottom: =0
@@ -103,7 +123,7 @@
 
             recCurrentOrderDivider As rectangle:
                 BorderColor: =RGBA(32, 54, 71, 1)
-                Fill: =varTheme.primaryColor
+                Fill: =Color.White
                 Height: =2
                 OnSelect: =
                 Width: =Parent.Width - 40
@@ -114,6 +134,7 @@
             lblSumCost As label:
                 Align: =Align.Right
                 BorderColor: =RGBA(32, 54, 71, 1)
+                Color: =RGBA(255, 255, 255, 1)
                 Font: =varTheme.font
                 Height: =Parent.Height
                 OnSelect: =
@@ -131,6 +152,7 @@
 
             lblGroupNameExtra As label:
                 BorderColor: =RGBA(32, 54, 71, 1)
+                Color: =RGBA(255, 255, 255, 1)
                 Font: =varTheme.font
                 Height: =70
                 OnSelect: =
@@ -148,7 +170,7 @@
 
             icnHeaderExpandedState As icon.Add:
                 BorderColor: =RGBA(32, 54, 71, 1)
-                Color: =RGBA(32, 54, 71, 1)
+                Color: =RGBA(255, 255, 255, 1)
                 Height: =30
                 Icon: |-
                     =If(ThisItem.name in colCurrentOrderState_CollapsedGroups, 
@@ -219,6 +241,7 @@
                 ZIndex: =3
 
                 lblItemPrice_1 As label:
+                    Color: =RGBA(255, 255, 255, 1)
                     DisplayMode: =    DisplayMode.Edit
                     Font: =varTheme.font
                     Height: =35
@@ -235,6 +258,7 @@
                     ZIndex: =1
 
                 lblItemDisplayName_1 As label:
+                    Color: =RGBA(255, 255, 255, 1)
                     Font: =varTheme.font
                     Height: =35
                     PaddingBottom: =0
@@ -266,6 +290,7 @@
                 ZIndex: =4
 
             btnQuantityOrderSummary As button:
+                BorderColor: =Color.White
                 DisplayMode: =    DisplayMode.Edit
                 Fill: =varTheme.primaryColor
                 Height: =70
@@ -290,7 +315,7 @@
                         DisplayMode.View, 
                         DisplayMode.Edit
                     )
-                Fill: =RGBA(255, 255, 255, 1)
+                Fill: =varTheme.brandColor
                 Height: =Parent.Height - 5
                 Visible: =ThisItem.id = ctxShowQuantityControlForIs
                 Width: =275
@@ -303,7 +328,7 @@
                     BorderThickness: =1
                     DisabledFill: =varTheme.primaryColor
                     DisplayMode: =DisplayMode.View
-                    Fill: =varTheme.primaryColor
+                    Fill: =ColorFade(varTheme.primaryColor, -20%)
                     Height: =70
                     HoverFill: =varTheme.primaryColor
                     OnSelect: =
@@ -374,6 +399,10 @@
                 btnQCQuantityOS As button:
                     BorderColor: =Color.White
                     BorderThickness: =1
+                    DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                    DisabledColor: =RGBA(255, 255, 255, 1)
+                    DisabledFill: =ColorFade(varTheme.primaryColor, -20%)
+                    DisplayMode: =DisplayMode.Disabled
                     Fill: =varTheme.primaryColor
                     Height: =60
                     HoverFill: =ColorFade(RGBA(100, 118, 132, 1), -20%)
@@ -450,11 +479,12 @@
         ZIndex: =3
 
     btnSubmitOrder As button:
+        BorderColor: =Color.White
         DisplayMode: =If(Sum(colSelectedItems, quantity), DisplayMode.Edit, DisplayMode.Disabled)
         Fill: =varTheme.primaryColor
         Font: =varTheme.font
         Height: =80
-        HoverFill: =ColorFade(RGBA(100, 118, 132, 1), -20%)
+        HoverFill: =ColorFade(Self.Fill, -20%)
         OnSelect: |
             =UpdateContext({ctxShowLoadingScreen: true, ctxError: false});
             
@@ -493,7 +523,7 @@
 
         lblCurrentOrderNumber As label:
             BorderColor: =RGBA(32, 54, 71, 1)
-            Color: =varTheme.primaryColor
+            Color: =Color.White
             Font: =varTheme.font
             Height: =60
             Size: =34
@@ -506,18 +536,18 @@
         lblCurrentOrderTable As label:
             Align: =Align.Center
             BorderColor: =RGBA(32, 54, 71, 1)
-            Color: =varTheme.primaryColor
+            Color: =Color.White
             Height: =50
             Size: =30
             Text: ="Order Summary"
             Width: =335
-            X: =Parent.Width/2 - Self.Width/2
-            Y: =30
+            X: =152
+            Y: =25
             ZIndex: =2
 
         icnBack As icon.ChevronLeft:
             BorderColor: =RGBA(32, 54, 71, 1)
-            Color: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(255, 255, 255, 1)
             Height: =60
             Icon: =Icon.ChevronLeft
             OnSelect: =Back(ScreenTransition.UnCoverRight);
