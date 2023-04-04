@@ -1,0 +1,117 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_dynamicssmbsaas_1": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "cr301_BcConnection"
+        },
+        "api": {
+          "name": "shared_dynamicssmbsaas"
+        }
+      },
+      "shared_teams": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "cr301_sharedteams_4e4a1"
+        },
+        "api": {
+          "name": "shared_teams"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "splitOn": "@triggerBody()['rows']",
+          "metadata": {
+            "operationMetadataId": "fb31057e-9c2d-43ea-b02e-e0daab004a72"
+          },
+          "type": "Request",
+          "kind": "ApiConnection",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "title": "Input",
+                        "type": "string",
+                        "x-ms-dynamically-added": true,
+                        "description": "Please enter your input",
+                        "x-ms-content-hint": "TEXT"
+                      }
+                    },
+                    "required": [
+                      "text"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "rows"
+              ]
+            },
+            "host": {
+              "connection": {
+                "name": "@parameters('$connections')['shared_dynamicssmbsaas_1']['connectionId']"
+              }
+            },
+            "operationId": "ForASelectedRecordV3",
+            "parameters": {
+              "bcenvironment": "PRODUCTION",
+              "company": "a2db7307-078b-ed11-aad8-000d3a21edc2",
+              "context": "page31"
+            }
+          }
+        }
+      },
+      "actions": {
+        "Post_message_in_a_chat_or_channel": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "6fe71557-9765-443a-a1ac-bee24d4cc4eb"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_teams",
+              "operationId": "PostMessageToConversation",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams"
+            },
+            "parameters": {
+              "poster": "Flow bot",
+              "location": "Channel",
+              "body/recipient/groupId": "4d952eb3-8430-4551-9715-afc76e1e958b",
+              "body/recipient/channelId": "19:y1oj0pifN0PHjFSMFaYeaK2Aj1YNFU7_bdYRYOSPmAg1@thread.tacv2",
+              "body/messageBody": "<p>Hi there!!&nbsp;</p>"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
