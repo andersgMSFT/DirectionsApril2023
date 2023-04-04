@@ -87,7 +87,7 @@ jobs:
         with:
           shell: powershell
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
-          deploySettings: ${{ env.deployTo }} 
+          deploySettings: ${{ env.deployTo }}
           authSettings: ${{ env.authContext }}
 
       - name: Build PowerPlatform Solution
@@ -101,14 +101,14 @@ jobs:
           outputFileName: tempsolution-PowerPlatformSolution-
           environmentName: ${{ env.environmentName }}
           companyId: ${{ env.companyId }}
-      
+
       - name: Export and push changes to Power Platform
         uses: BusinessCentralDemos/AL-Go-Actions/DeployPowerPlatform@PowerPlatform
         with:
           shell: powershell
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
-          artifactPath: '.buildartifacts'
-          deploySettings: ${{ env.deployTo }} 
+          artifactPath: ".buildartifacts"
+          deploySettings: ${{ env.deployTo }}
           authSettings: ${{ env.authContext }}
 
       - name: Finalize the workflow

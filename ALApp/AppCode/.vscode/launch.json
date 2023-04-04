@@ -7,13 +7,14 @@
             "type": "al",
             "environmentType": "Sandbox",
             "environmentName": "powerAppsTest",
-            "startupObjectId": 51000,
+            "startupObjectId": 52000,
             "startupObjectType": "Page",
             "breakOnError": "All",
             "launchBrowser": false,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
-            "schemaUpdateMode": "ForceSync"
+            "schemaUpdateMode": "ForceSync",
+            "forceUpgrade": true
         }
     ]
 }
