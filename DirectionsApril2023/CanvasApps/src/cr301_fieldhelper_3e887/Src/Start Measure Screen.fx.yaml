@@ -30,11 +30,13 @@
             LayoutMinHeight: =70
             LayoutMinWidth: =280
             MeasurementType: ='Microsoft.MeasureInMR.MeasurementType'.Volume
-            OnMixedRealitySelect: |-
+            OnMixedRealitySelect: |
                 =Set(varMeasurement, First(Self.Measurements));
                 Set(varImage, First(Self.Photos));
                 
-                Navigate('Measurement Screen', ScreenTransition.Cover);
+                If(Not(IsBlank(varMeasurement)),
+                    Navigate('Measurement Screen', ScreenTransition.Cover);
+                );
             PaddingBottom: =0
             PaddingLeft: =0
             PaddingRight: =0

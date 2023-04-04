@@ -45,7 +45,6 @@
     "btnSubmitOrder": 104,
     "btnYes": 14,
     "Button2": 46,
-    "Button3": 148,
     "Button3_1": 149,
     "Button4": 90,
     "Button6": 48,
@@ -192,11 +191,12 @@
     "Success Screen": 138,
     "Summary Screen": 101,
     "Timer1": 141,
-    "txtItemLongDescription": 176
+    "txtItemLongDescription": 176,
+    "ViewInMR1": 178
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "04/03/2023 13:34:58",
+  "HeaderLastSavedDateTimeUTC": "04/03/2023 15:21:19",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {
     "0ff5df45-9575-4f2b-8cac-8ae027644295": "\"/providers/microsoft.powerapps/apis/shared_dynamicssmbsaas/connections/shared-dynamicssmbsa-18332827-61e5-4e26-8a3b-6bb09e15d956\""
@@ -240,7 +240,8 @@
     }
   },
   "OrderPcfTemplate": {
-    "MeasureInMR": 0
+    "MeasureInMR": 0,
+    "ViewInMR": 1
   },
   "OrderTemplate": {},
   "OrderXMLTemplate": {
@@ -284,7 +285,6 @@
     "btnSubmitOrder": {},
     "btnYes": {},
     "Button2": {},
-    "Button3": {},
     "Button3_1": {},
     "Button4": {},
     "Button6": {},
@@ -561,7 +561,37 @@
     "Success Screen": {},
     "Summary Screen": {},
     "Timer1": {},
-    "txtItemLongDescription": {}
+    "txtItemLongDescription": {},
+    "ViewInMR1": {
+      "Photos": {
+        "Type": {
+          "EnumString": "",
+          "Kind": "Table",
+          "Name": "Root",
+          "Type": [
+            {
+              "EnumString": "",
+              "Kind": "Number",
+              "Name": "FileSize",
+              "Type": []
+            },
+            {
+              "EnumString": "",
+              "Kind": "Image",
+              "Name": "ImageURI",
+              "Type": []
+            },
+            {
+              "EnumString": "",
+              "Kind": "String",
+              "Name": "MimeType",
+              "Type": []
+            }
+          ]
+        },
+        "Version": "1.330"
+      }
+    }
   },
   "PCFDynamicSchemaForIRRetrievalEntry": {
     "mrStartMeasure": {
@@ -571,6 +601,12 @@
       },
       "Photos": {
         "DynamicSchema": "{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ImageURI\":{\"type\":\"string\",\"format\":\"uri\",\"x-ms-media-kind\":\"image\"},\"MimeType\":{\"type\":\"string\"},\"FileSize\":{\"type\":\"number\"},\"Label\":{\"type\":\"string\"}}}}",
+        "PCFSkipValidation": false
+      }
+    },
+    "ViewInMR1": {
+      "Photos": {
+        "DynamicSchema": "{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ImageURI\":{\"type\":\"string\",\"format\":\"uri\",\"x-ms-media-kind\":\"image\"},\"MimeType\":{\"type\":\"string\"},\"FileSize\":{\"type\":\"number\"}}}}",
         "PCFSkipValidation": false
       }
     }
@@ -604,7 +640,6 @@
     "btnSubmitOrder": 144,
     "btnYes": 158,
     "Button2": 25,
-    "Button3": 46,
     "Button3_1": 47,
     "Button4": 30,
     "Button6": 149,
@@ -751,7 +786,8 @@
     "Success Screen": 0,
     "Summary Screen": 0,
     "Timer1": 148,
-    "txtItemLongDescription": 108
+    "txtItemLongDescription": 108,
+    "ViewInMR1": 46
   },
   "ResourcesJsonIndices": {
     "Image-loading-spinner": 2,
