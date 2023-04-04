@@ -6,7 +6,8 @@
     "andersg (Production)",
     "Staging",
     "UX (Production)",
-    "BLAZEJ (Production)"
+    "BLAZEJ (Production)",
+    "DirectionsBackup (Production)"
   ],
   "DeployToAndersg": {
     "environmentName": "powerAppsTest",
@@ -27,5 +28,10 @@
     "environmentName": "SandboxCopilot22",
     "companyId": "726a0ad6-0dc2-ed11-a385-000d3a269ff8",
     "ppEnvironmentUrl": "https://orgb8099c47.crm.dynamics.com/"
+  },
+  "DeployToDirectionsBackup": {
+    "environmentName": "Production",
+    "companyId": "9a7a387b-dfcd-ed11-94c8-000d3a2b981f",
+    "ppEnvironmentUrl": "https://orgdd8354bb.crm.dynamics.com/"
   }
 }
